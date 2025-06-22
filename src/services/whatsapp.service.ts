@@ -52,7 +52,17 @@ export class WhatsappService {
             throw new Error(`Failed to send message: ${errMsg}`);
         }
     }
-    
-    
-    
+
+    async checkConnection(): Promise<string> {
+        const client = getClient();
+        if (!client) throw new Error("WhatsApp client is not initialized.");
+
+        try {
+            const state = await client.getConnectionState();
+            return `WhatsApp client is in state: ${state}`;
+        } catch (error: any) {
+            console.error('Error checking connection:', error);
+            throw new Error(`Failed to check connection: ${error.message || 'Unknown error'}`);
+        }
+    }
 }
