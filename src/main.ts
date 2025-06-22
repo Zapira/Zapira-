@@ -4,6 +4,7 @@ import { initVenom } from './whatsapp/venom';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  await app.listen(process.env.PORT ?? 3000);
   
   await initVenom(
     (qr) => console.log('QR code ready'),
@@ -11,8 +12,5 @@ async function bootstrap() {
     () => console.log('WhatsApp disconnected.')
   );
 
-  await app.listen(process.env.PORT ?? 3000);
-
-  
 }
 bootstrap();
