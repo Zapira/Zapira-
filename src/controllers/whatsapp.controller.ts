@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, Post } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, Post } from '@nestjs/common';
 import { WhatsappService } from 'src/services/whatsapp.service';
 @Controller('whatsapp')
 export class WhatsappController {
@@ -24,6 +24,22 @@ export class WhatsappController {
                 status: "error",
                 message: error.message
             }
+        }
+    }
+
+    @Get('check-connection')
+    async checkConnection() {
+        try {
+            const result = await this.WhatsappService.checkConnection();
+            return {
+                status: "success",
+                data: result
+            };
+        } catch (error) {
+            return {
+                status: "error",
+                message: error.message
+            };
         }
     }
 }
